@@ -10,11 +10,12 @@ import SwiftUI
 struct ContentView: View {
     @State private var responseText = ""
     @State private var responses = [Response]()
+    @State private var scorer = Scorer()
     var body: some View {
         NavigationStack {
             VStack {
                 ScrollView {
-                    Text("Chart")
+                    ResponsePieChartView(responses: responses)
                     
                     Text("Overview Section")
                     
@@ -58,7 +59,6 @@ struct ContentView: View {
 
 private extension ContentView {
     func saveResponse(_ text: String, shouldInsert: Bool = false) {
-        let scorer = Scorer()
         let score = scorer.score(text)
         let response = Response(id: UUID().uuidString, text: text, score: score)
         responses.insert(response, at: 0)
